@@ -421,3 +421,11 @@ executable("modal_form") {
     ":gui",
   ]
 }
+
+executable("menu_debug") {
+  sources = [ "examples/menu_debug.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

@@ -438,6 +438,14 @@ executable("mbox") {
   ]
 }
 
+executable("loader_1") {
+  sources = [ "examples/loader_1.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("loader_2") {
   sources = [ "examples/loader_2.cpp" ]
   deps = [

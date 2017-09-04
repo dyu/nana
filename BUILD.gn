@@ -382,6 +382,14 @@ executable("textbox_line_number") {
   ]
 }
 
+executable("screen") {
+  sources = [ "examples/screen.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("stretch_image") {
   sources = [ "examples/stretch_image.cpp" ]
   deps = [

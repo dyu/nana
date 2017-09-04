@@ -661,3 +661,11 @@ executable("animate-bmp") {
     ":gui",
   ]
 }
+
+executable("a_group_impl") {
+  sources = [ "examples/a_group_impl.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

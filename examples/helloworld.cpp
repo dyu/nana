@@ -3,6 +3,10 @@
 #include <nana/gui/widgets/button.hpp>
 #include <nana/gui/widgets/button.hpp>
 
+#ifdef WIN32
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#endif
+
 int main()
 {
     using namespace nana;

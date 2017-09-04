@@ -542,6 +542,14 @@ executable("framework_design_3") {
   ]
 }
 
+executable("folder_tree_nana") {
+  sources = [ "examples/folder_tree_nana.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("folder_tree_std") {
   sources = [ "examples/folder_tree_std.cpp" ]
   deps = [

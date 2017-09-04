@@ -502,3 +502,11 @@ executable("helloworld_quit") {
   ]
 }
 
+executable("hello") {
+  sources = [ "examples/hello.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+

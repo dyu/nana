@@ -301,3 +301,11 @@ executable("helloworld") {
     ":gui",
   ]
 }
+
+executable("helloworld_demo") {
+  sources = [ "examples/helloworld_demo.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

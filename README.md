@@ -35,3 +35,21 @@ There are two main branches with an infinite lifetime:
 Other branches:
 * **features** are used to develop new features for the upcoming or a distant future release. Feature branches are named as 'feature-FEATURENAME'.
 * **hotfix** is meant to prepare for a new release, and fixes some bugs from the corresponding tag on the master branch.
+
+## Build via GN
+1. `git clone --depth 1 --single-branch -b ns https://github.com/dyu/gn-build`
+
+2. `echo 'buildconfig = "//gn-build/config/BUILDCONFIG.gn"' > .gn`
+   On windows, exclude the single quote.
+
+3. On linux:
+   ```sh
+   gn gen gn-out --args='gcc_cc="gcc" gcc_cxx="g++" symbol_level=0 is_debug=false is_clang=false is_official_build=true'
+   ```
+   On windows:
+   ```sh
+   gn gen gn-out --args="visual_studio_path=\"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\" visual_studio_version=\"2015\" symbol_level=0 is_debug=false is_clang=false is_official_build=true"
+   ```
+
+4. `ninja -C gn-out`
+

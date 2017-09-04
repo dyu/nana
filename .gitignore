@@ -1,3 +1,6 @@
+/gn-build
+/gn-out
+/.gn
 #This .gitignore created by Ariel Vina-Rodriguez
 #ignore thumbnails created by windows
 Thumbs.db

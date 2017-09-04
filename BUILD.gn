@@ -621,3 +621,11 @@ executable("dock") {
     ":gui",
   ]
 }
+
+executable("decore") {
+  sources = [ "examples/decore.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

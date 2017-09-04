@@ -485,3 +485,12 @@ executable("label_listener") {
     ":gui",
   ]
 }
+
+executable("inputbox") {
+  sources = [ "examples/inputbox.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+

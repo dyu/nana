@@ -517,3 +517,27 @@ executable("group") {
     ":gui",
   ]
 }
+
+executable("framework_design_1") {
+  sources = [ "examples/framework_design_1.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
+executable("framework_design_2") {
+  sources = [ "examples/framework_design_2.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
+executable("framework_design_3") {
+  sources = [ "examples/framework_design_3.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

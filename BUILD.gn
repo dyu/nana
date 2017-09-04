@@ -589,3 +589,11 @@ executable("example_combox") {
     ":gui",
   ]
 }
+
+executable("example_button") {
+  sources = [ "examples/example_button.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

@@ -461,3 +461,12 @@ executable("listbox_resolver") {
     ":gui",
   ]
 }
+
+executable("listbox_inline_widget") {
+  sources = [ "examples/listbox_inline_widget.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+

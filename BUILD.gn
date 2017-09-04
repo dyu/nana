@@ -470,3 +470,10 @@ executable("listbox_inline_widget") {
   ]
 }
 
+executable("lambda_event") {
+  sources = [ "examples/lambda_event.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

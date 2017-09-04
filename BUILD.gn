@@ -477,3 +477,11 @@ executable("lambda_event") {
     ":gui",
   ]
 }
+
+executable("label_listener") {
+  sources = [ "examples/label_listener.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

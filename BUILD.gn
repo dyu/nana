@@ -413,3 +413,11 @@ executable("monty_hall") {
     ":gui",
   ]
 }
+
+executable("modal_form") {
+  sources = [ "examples/modal_form.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

@@ -645,3 +645,11 @@ executable("categ") {
     ":gui",
   ]
 }
+
+executable("background-effects") {
+  sources = [ "examples/background-effects.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

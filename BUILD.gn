@@ -565,3 +565,11 @@ executable("folder_tree_std") {
     ":gui",
   ]
 }
+
+executable("example_menu") {
+  sources = [ "examples/example_menu.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

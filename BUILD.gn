@@ -494,3 +494,11 @@ executable("inputbox") {
   ]
 }
 
+executable("helloworld_quit") {
+  sources = [ "examples/helloworld_quit.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+

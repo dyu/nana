@@ -326,4 +326,11 @@ executable("file_explorer") {
   ]
 }
 
+executable("notepad") {
+  sources = [ "examples/notepad.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
 

@@ -637,3 +637,11 @@ executable("clicked") {
     ":gui",
   ]
 }
+
+executable("categ") {
+  sources = [ "examples/categ.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

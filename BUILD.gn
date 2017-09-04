@@ -581,3 +581,11 @@ executable("example_listbox") {
     ":gui",
   ]
 }
+
+executable("example_combox") {
+  sources = [ "examples/example_combox.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

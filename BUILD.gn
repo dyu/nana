@@ -342,3 +342,11 @@ executable("widget_show") {
   ]
 }
 
+executable("widget_show2") {
+  sources = [ "examples/widget_show2.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+

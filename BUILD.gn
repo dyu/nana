@@ -453,3 +453,11 @@ executable("loader_2") {
     ":gui",
   ]
 }
+
+executable("listbox_resolver") {
+  sources = [ "examples/listbox_resolver.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

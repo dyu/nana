@@ -573,3 +573,11 @@ executable("example_menu") {
     ":gui",
   ]
 }
+
+executable("example_listbox") {
+  sources = [ "examples/example_listbox.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

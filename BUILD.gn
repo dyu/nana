@@ -309,3 +309,11 @@ executable("helloworld_demo") {
     ":gui",
   ]
 }
+
+executable("calculator") {
+  sources = [ "examples/calculator.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

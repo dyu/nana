@@ -397,3 +397,11 @@ executable("stretch_image") {
     ":gui",
   ]
 }
+
+executable("place_login") {
+  sources = [ "examples/place_login.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

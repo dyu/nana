@@ -365,3 +365,11 @@ executable("various_events") {
     ":gui",
   ]
 }
+
+executable("threading") {
+  sources = [ "examples/threading.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

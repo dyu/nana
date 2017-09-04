@@ -597,3 +597,11 @@ executable("example_button") {
     ":gui",
   ]
 }
+
+executable("draw") {
+  sources = [ "examples/draw.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

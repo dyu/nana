@@ -2,6 +2,12 @@
 
 config("nana_config") {
   include_dirs = [ "include" ]
+  if (!is_win) {
+    libs = [
+      "X11",
+      "Xft",
+    ]
+  }
 }
 
 static_library("base") {
@@ -31,13 +37,13 @@ static_library("base") {
     "source/basic_types.cpp",
     "source/charset.cpp",
     "source/datetime.cpp",
-    #"source/deploy.cpp",
+    "source/deploy.cpp", # depends on freetype2
     "source/internationalization.cpp",
     "source/stdc++.cpp",
     "source/unicode_bidi.cpp",
     
-    #"source/detail/platform_abstraction.cpp",
-    #"source/detail/platform_spec_windows.cpp",
+    "source/detail/platform_abstraction.cpp", # depends on freetype2
+    "source/detail/platform_spec_windows.cpp", # depends on freetype2
     
     # filesystem
     "include/nana/filesystem/filesystem.hpp",
@@ -67,6 +73,7 @@ static_library("base") {
   defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
   if (!is_win) {
     defines += [ "linux" ]
+    include_dirs = [ "/usr/include/freetype2" ]
   }
   
   public_configs = [ ":nana_config" ]
@@ -187,23 +194,23 @@ static_library("gui") {
     "source/gui/widgets/menubar.cpp",
     "source/gui/widgets/picture.cpp",
     "source/gui/tooltip.cpp",
-    #"source/gui/timer.cpp",
+    "source/gui/timer.cpp", # depends on freetype2
     "source/gui/detail/events_operation.cpp",
     "source/gui/detail/basic_window.cpp",
-    #"source/gui/detail/drawer.cpp",
-    #"source/gui/detail/native_window_interface.cpp",
+    "source/gui/detail/drawer.cpp", # depends on freetype2
+    "source/gui/detail/native_window_interface.cpp", # depends on freetype2
     "source/gui/detail/element_store.cpp",
     "source/gui/detail/color_schemes.cpp",
-    #"source/gui/detail/bedrock_pi.cpp",
-    #"source/gui/detail/bedrock_posix.cpp",
-    #"source/gui/detail/bedrock_windows.cpp",
+    "source/gui/detail/bedrock_pi.cpp", # depends on freetype2
+    "source/gui/detail/bedrock_posix.cpp", # depends on freetype2
+    "source/gui/detail/bedrock_windows.cpp", # depends on freetype2
     "source/gui/detail/window_layout.cpp",
     "source/gui/detail/window_manager.cpp",
     "source/gui/msgbox.cpp",
     "source/gui/drawing.cpp",
     "source/gui/animation.cpp",
     "source/gui/filebox.cpp",
-    #"source/gui/notifier.cpp",
+    "source/gui/notifier.cpp", # depends on freetype2
     "source/gui/basis.cpp",
     
     # paint
@@ -228,23 +235,24 @@ static_library("gui") {
     "source/paint/detail/image_pixbuf.hpp",
     "source/paint/truetype.hpp",
     
-    #"source/paint/text_renderer.cpp",
+    "source/paint/text_renderer.cpp", # depends on freetype2
     "source/paint/image_process_selector.cpp",
-    #"source/paint/graphics.cpp",
-    #"source/paint/image.cpp",
-    #"source/paint/detail/native_paint_interface.cpp",
+    "source/paint/graphics.cpp", # depends on freetype2
+    "source/paint/image.cpp", # depends on freetype2
+    "source/paint/detail/native_paint_interface.cpp", # depends on freetype2
     "source/paint/detail/image_process_provider.cpp",
-    #"source/paint/pixel_buffer.cpp",
+    "source/paint/pixel_buffer.cpp", # depends on freetype2
     
     # system
     "include/nana/system/dataexch.hpp",
     
-    #"source/system/dataexch.cpp",
+    "source/system/dataexch.cpp", # depends on freetype2
   ]
 
   defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
   if (!is_win) {
     defines += [ "linux" ]
+    include_dirs = [ "/usr/include/freetype2" ]
   }
   
   public_configs = [ ":nana_config" ]

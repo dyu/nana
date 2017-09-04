@@ -653,3 +653,11 @@ executable("background-effects") {
     ":gui",
   ]
 }
+
+executable("animate-bmp") {
+  sources = [ "examples/animate-bmp.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

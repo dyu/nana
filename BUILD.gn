@@ -350,3 +350,12 @@ executable("widget_show2") {
   ]
 }
 
+executable("window-dragger") {
+  sources = [ "examples/window-dragger.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
+

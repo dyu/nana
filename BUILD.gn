@@ -4,6 +4,7 @@ config("nana_config") {
   include_dirs = [ "include" ]
   if (!is_win) {
     libs = [
+      "stdc++fs",
       "X11",
       "Xft",
       "fontconfig",

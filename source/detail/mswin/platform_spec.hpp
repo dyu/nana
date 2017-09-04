@@ -22,6 +22,7 @@
 #include <nana/gui/detail/event_code.hpp>
 
 #include <windows.h>
+#include <shellapi.h>
 #include <memory>
 #include <functional>
 

@@ -2,7 +2,14 @@
 
 config("nana_config") {
   include_dirs = [ "include" ]
-  if (!is_win) {
+  if (is_win) {
+    libs = [
+      "shell32.lib",
+      "user32.lib",
+      "gdi32.lib",
+      "comdlg32.lib", # filebox dependency
+    ]
+  } else {
     libs = [
       "stdc++fs",
       "X11",

@@ -16,6 +16,7 @@
 
 #if defined(NANA_WINDOWS)
 	#include <windows.h>
+	#include <Commdlg.h>
 #elif defined(NANA_POSIX)
 	#include <nana/gui/widgets/label.hpp>
 	#include <nana/gui/widgets/button.hpp>

@@ -373,3 +373,11 @@ executable("threading") {
     ":gui",
   ]
 }
+
+executable("textbox_line_number") {
+  sources = [ "examples/textbox_line_number.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

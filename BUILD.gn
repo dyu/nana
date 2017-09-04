@@ -629,3 +629,11 @@ executable("decore") {
     ":gui",
   ]
 }
+
+executable("clicked") {
+  sources = [ "examples/clicked.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

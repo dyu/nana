@@ -542,6 +542,14 @@ executable("framework_design_3") {
   ]
 }
 
+executable("filebox-txt") {
+  sources = [ "examples/filebox-txt.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("folder_tree_nana") {
   sources = [ "examples/folder_tree_nana.cpp" ]
   deps = [

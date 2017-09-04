@@ -429,3 +429,11 @@ executable("menu_debug") {
     ":gui",
   ]
 }
+
+executable("mbox") {
+  sources = [ "examples/mbox.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

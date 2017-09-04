@@ -6,6 +6,7 @@ config("nana_config") {
     libs = [
       "X11",
       "Xft",
+      "fontconfig",
     ]
   }
 }
@@ -44,6 +45,7 @@ static_library("base") {
     
     "source/detail/platform_abstraction.cpp", # depends on freetype2
     "source/detail/platform_spec_windows.cpp", # depends on freetype2
+    "source/detail/platform_spec_posix.cpp", # depends on freetype2
     
     # filesystem
     "include/nana/filesystem/filesystem.hpp",
@@ -281,3 +283,13 @@ static_library("audio") {
   deps = [ ":base" ]
 }
 
+# ==================================================
+# executables
+
+executable("helloworld") {
+  sources = [ "examples/helloworld.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

@@ -405,3 +405,11 @@ executable("place_login") {
     ":gui",
   ]
 }
+
+executable("monty_hall") {
+  sources = [ "examples/monty_hall.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

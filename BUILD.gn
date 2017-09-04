@@ -613,3 +613,11 @@ executable("drag-button") {
     ":gui",
   ]
 }
+
+executable("dock") {
+  sources = [ "examples/dock.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

@@ -605,3 +605,11 @@ executable("draw") {
     ":gui",
   ]
 }
+
+executable("drag-button") {
+  sources = [ "examples/drag-button.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

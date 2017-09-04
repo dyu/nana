@@ -317,3 +317,13 @@ executable("calculator") {
     ":gui",
   ]
 }
+
+executable("file_explorer") {
+  sources = [ "examples/file_explorer.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
+

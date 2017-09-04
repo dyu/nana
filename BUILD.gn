@@ -1,0 +1,275 @@
+# ==================================================
+
+config("nana_config") {
+  include_dirs = [ "include" ]
+}
+
+static_library("base") {
+  sources = [
+    # headers
+    "include/nana/any.hpp",
+    "include/nana/basic_types.hpp",
+    "include/nana/c++defines.hpp",
+    "include/nana/charset.hpp",
+    "include/nana/concepts.hpp",
+    "include/nana/config.hpp",
+    "include/nana/datetime.hpp",
+    "include/nana/deploy.hpp",
+    "include/nana/fwd.hpp",
+    "include/nana/internalization.hpp",
+    "include/nana/key_type.hpp",
+    "include/nana/optional.hpp",
+    "include/nana/stdc++.hpp",
+    "include/nana/std_condition_variable.hpp",
+    "include/nana/std_mutex.hpp",
+    "include/nana/std_thread.hpp",
+    "include/nana/traits.hpp",
+    "include/nana/unicode_bidi.hpp",
+    "include/nana/verbose_preprocessor.hpp",
+    
+    "source/any.cpp",
+    "source/basic_types.cpp",
+    "source/charset.cpp",
+    "source/datetime.cpp",
+    #"source/deploy.cpp",
+    "source/internationalization.cpp",
+    "source/stdc++.cpp",
+    "source/unicode_bidi.cpp",
+    
+    #"source/detail/platform_abstraction.cpp",
+    #"source/detail/platform_spec_windows.cpp",
+    
+    # filesystem
+    "include/nana/filesystem/filesystem.hpp",
+    "include/nana/filesystem/filesystem_ext.hpp",
+    
+    "source/filesystem/filesystem.cpp",
+    
+    # pat
+    "include/nana/pat/abstract_factory.hpp",
+    "include/nana/pat/cloneable.hpp",
+    
+    # system
+    "include/nana/system/timepiece.hpp",
+    "include/nana/system/platform.hpp",
+    "include/nana/system/shared_wrapper.hpp",
+    
+    "source/system/timepiece.cpp",
+    "source/system/platform.cpp",
+    "source/system/shared_wrapper.cpp",
+    
+    # threads
+    "include/nana/threads/pool.hpp",
+    
+    "source/threads/pool.cpp",
+  ]
+  
+  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
+  if (!is_win) {
+    defines += [ "linux" ]
+  }
+  
+  public_configs = [ ":nana_config" ]
+}
+
+static_library("gui") {
+  sources = [
+    "include/nana/gui.hpp",
+    "include/nana/gui/basis.hpp",
+    "include/nana/gui/dragger.hpp",
+    "include/nana/gui/filebox.hpp",
+    "include/nana/gui/screen.hpp",
+    "include/nana/gui/tooltip.hpp",
+    "include/nana/gui/effects.hpp",
+    "include/nana/gui/wvl.hpp",
+    "include/nana/gui/programming_interface.hpp",
+    "include/nana/gui/widgets/tabbar.hpp",
+    "include/nana/gui/widgets/panel.hpp",
+    "include/nana/gui/widgets/textbox.hpp",
+    "include/nana/gui/widgets/form.hpp",
+    "include/nana/gui/widgets/toolbar.hpp",
+    "include/nana/gui/widgets/categorize.hpp",
+    "include/nana/gui/widgets/picture.hpp",
+    "include/nana/gui/widgets/menu.hpp",
+    "include/nana/gui/widgets/scroll.hpp",
+    "include/nana/gui/widgets/combox.hpp",
+    "include/nana/gui/widgets/listbox.hpp",
+    "include/nana/gui/widgets/float_listbox.hpp",
+    "include/nana/gui/widgets/widget.hpp",
+    "include/nana/gui/widgets/skeletons/text_editor.hpp",
+    "include/nana/gui/widgets/skeletons/text_editor_part.hpp",
+    "include/nana/gui/widgets/skeletons/text_token_stream.hpp",
+    "include/nana/gui/widgets/skeletons/textbase.hpp",
+    "include/nana/gui/widgets/skeletons/textbase_export_interface.hpp",
+    "include/nana/gui/widgets/label.hpp",
+    "include/nana/gui/widgets/frame.hpp",
+    "include/nana/gui/widgets/detail/tree_cont.hpp",
+    "include/nana/gui/widgets/detail/inline_widget.hpp",
+    "include/nana/gui/widgets/detail/compset.hpp",
+    "include/nana/gui/widgets/detail/inline_widget_manager.hpp",
+    "include/nana/gui/widgets/date_chooser.hpp",
+    "include/nana/gui/widgets/button.hpp",
+    "include/nana/gui/widgets/treebox.hpp",
+    "include/nana/gui/widgets/progress.hpp",
+    "include/nana/gui/widgets/group.hpp",
+    "include/nana/gui/widgets/spinbox.hpp",
+    "include/nana/gui/widgets/checkbox.hpp",
+    "include/nana/gui/widgets/menubar.hpp",
+    "include/nana/gui/widgets/slider.hpp",
+    "include/nana/gui/animation.hpp",
+    "include/nana/gui/drawing.hpp",
+    "include/nana/gui/place.hpp",
+    "include/nana/gui/msgbox.hpp",
+    "include/nana/gui/layout_utility.hpp",
+    "include/nana/gui/notifier.hpp",
+    "include/nana/gui/element.hpp",
+    "include/nana/gui/detail/element_store.hpp",
+    "include/nana/gui/detail/widget_notifier_interface.hpp",
+    "include/nana/gui/detail/bedrock_pi_data.hpp",
+    "include/nana/gui/detail/native_window_interface.hpp",
+    "include/nana/gui/detail/inner_fwd_implement.hpp",
+    "include/nana/gui/detail/widget_content_measurer_interface.hpp",
+    "include/nana/gui/detail/internal_scope_guard.hpp",
+    "include/nana/gui/detail/effects_renderer.hpp",
+    "include/nana/gui/detail/drawer.hpp",
+    "include/nana/gui/detail/color_schemes.hpp",
+    "include/nana/gui/detail/general_events.hpp",
+    "include/nana/gui/detail/event_code.hpp",
+    "include/nana/gui/detail/events_holder.hpp",
+    "include/nana/gui/detail/widget_geometrics.hpp",
+    "include/nana/gui/detail/basic_window.hpp",
+    "include/nana/gui/detail/inner_fwd.hpp",
+    "include/nana/gui/detail/bedrock.hpp",
+    "include/nana/gui/detail/window_layout.hpp",
+    "include/nana/gui/detail/events_operation.hpp",
+    "include/nana/gui/detail/window_manager.hpp",
+    "include/nana/gui/timer.hpp",
+    "include/nana/gui/state_cursor.hpp",
+    
+    "source/gui/place_parts.hpp",
+    "source/gui/widgets/skeletons/content_view.hpp",
+    "source/gui/detail/dynamic_drawing_object.hpp",
+    "source/gui/detail/window_register.hpp",
+    
+    "source/gui/state_cursor.cpp",
+    "source/gui/place.cpp",
+    "source/gui/effects.cpp",
+    "source/gui/element.cpp",
+    "source/gui/dragger.cpp",
+    "source/gui/programming_interface.cpp",
+    "source/gui/screen.cpp",
+    "source/gui/wvl.cpp",
+    "source/gui/layout_utility.cpp",
+    "source/gui/widgets/progress.cpp",
+    "source/gui/widgets/scroll.cpp",
+    "source/gui/widgets/widget.cpp",
+    "source/gui/widgets/button.cpp",
+    "source/gui/widgets/float_listbox.cpp",
+    "source/gui/widgets/slider.cpp",
+    "source/gui/widgets/listbox.cpp",
+    "source/gui/widgets/treebox.cpp",
+    "source/gui/widgets/menu.cpp",
+    "source/gui/widgets/spinbox.cpp",
+    "source/gui/widgets/group.cpp",
+    "source/gui/widgets/textbox.cpp",
+    "source/gui/widgets/frame.cpp",
+    "source/gui/widgets/panel.cpp",
+    "source/gui/widgets/tabbar.cpp",
+    "source/gui/widgets/checkbox.cpp",
+    "source/gui/widgets/form.cpp",
+    "source/gui/widgets/skeletons/content_view.cpp",
+    "source/gui/widgets/skeletons/text_editor.cpp",
+    "source/gui/widgets/label.cpp",
+    "source/gui/widgets/combox.cpp",
+    "source/gui/widgets/categorize.cpp",
+    "source/gui/widgets/date_chooser.cpp",
+    "source/gui/widgets/toolbar.cpp",
+    "source/gui/widgets/menubar.cpp",
+    "source/gui/widgets/picture.cpp",
+    "source/gui/tooltip.cpp",
+    #"source/gui/timer.cpp",
+    "source/gui/detail/events_operation.cpp",
+    "source/gui/detail/basic_window.cpp",
+    #"source/gui/detail/drawer.cpp",
+    #"source/gui/detail/native_window_interface.cpp",
+    "source/gui/detail/element_store.cpp",
+    "source/gui/detail/color_schemes.cpp",
+    #"source/gui/detail/bedrock_pi.cpp",
+    #"source/gui/detail/bedrock_posix.cpp",
+    #"source/gui/detail/bedrock_windows.cpp",
+    "source/gui/detail/window_layout.cpp",
+    "source/gui/detail/window_manager.cpp",
+    "source/gui/msgbox.cpp",
+    "source/gui/drawing.cpp",
+    "source/gui/animation.cpp",
+    "source/gui/filebox.cpp",
+    #"source/gui/notifier.cpp",
+    "source/gui/basis.cpp",
+    
+    # paint
+    "include/nana/paint/image_process_selector.hpp",
+    "include/nana/paint/text_renderer.hpp",
+    "include/nana/paint/pixel_buffer.hpp",
+    "include/nana/paint/image.hpp",
+    "include/nana/paint/detail/image_impl_interface.hpp",
+    "include/nana/paint/detail/ptdefs.hpp",
+    "include/nana/paint/detail/image_process_provider.hpp",
+    "include/nana/paint/detail/native_paint_interface.hpp",
+    "include/nana/paint/detail/image_processor.hpp",
+    "include/nana/paint/image_process_interface.hpp",
+    "include/nana/paint/graphics.hpp",
+    
+    "source/paint/image_accessor.hpp",
+    "source/paint/detail/image_ico_resource.hpp",
+    "source/paint/detail/image_bmp.hpp",
+    "source/paint/detail/image_jpeg.hpp",
+    "source/paint/detail/image_png.hpp",
+    "source/paint/detail/image_ico.hpp",
+    "source/paint/detail/image_pixbuf.hpp",
+    "source/paint/truetype.hpp",
+    
+    #"source/paint/text_renderer.cpp",
+    "source/paint/image_process_selector.cpp",
+    #"source/paint/graphics.cpp",
+    #"source/paint/image.cpp",
+    #"source/paint/detail/native_paint_interface.cpp",
+    "source/paint/detail/image_process_provider.cpp",
+    #"source/paint/pixel_buffer.cpp",
+    
+    # system
+    "include/nana/system/dataexch.hpp",
+    
+    #"source/system/dataexch.cpp",
+  ]
+
+  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
+  if (!is_win) {
+    defines += [ "linux" ]
+  }
+  
+  public_configs = [ ":nana_config" ]
+  deps = [ ":base" ]
+}
+
+static_library("audio") {
+  sources = [
+    "include/nana/audio/player.hpp",
+    "include/nana/audio/detail/buffer_preparation.hpp",
+    "include/nana/audio/detail/audio_stream.hpp",
+    "include/nana/audio/detail/audio_device.hpp",
+
+    "source/audio/player.cpp",
+    "source/audio/detail/audio_device.cpp",
+    "source/audio/detail/buffer_preparation.cpp",
+    "source/audio/detail/audio_stream.cpp",
+  ]
+  
+  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
+  if (!is_win) {
+    defines += [ "linux" ]
+  }
+  
+  public_configs = [ ":nana_config" ]
+  deps = [ ":base" ]
+}
+

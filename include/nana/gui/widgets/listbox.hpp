@@ -987,9 +987,13 @@ namespace nana
 				cat_proxy(essence*, size_type pos) noexcept;
 				cat_proxy(essence*, category_t*) noexcept;
 
-				/// Append an item at abs end of the category, set_value determines whether assign T object to the value of item.
-				template<typename T>
-				item_proxy append(T&& t, bool set_value = false)
+				/// Append an item at the end of this category using the oresolver to generate the texts to be put in each column.
+                ///
+                /// First you have to make sure there is an overload of the operator<<() of the oresolver for the type of the object used here
+                /// If a listbox have a model set, try call append_model instead.
+                template<typename T>
+				item_proxy append(  T&& t,                  ///< Value used by the resolver to generate the texts to be put in each column of the item
+                                    bool set_value = false) ///< determines whether to set the object as the value of this item.
 				{
 					oresolver ores(ess_);
 
@@ -1039,7 +1043,7 @@ namespace nana
 
 				model_guard model();
 
-				/// Appends one item at the end of this category with the specifies text in the column fields
+				/// Appends one item at the end of this category with the specifies texts in the column fields
 				void append(std::initializer_list<std::string> texts_utf8);
 				void append(std::initializer_list<std::wstring> texts);
 
@@ -1403,7 +1407,9 @@ the nana::detail::basic_window member pointer scheme
 
 		/// Scrolls the view to the first or last item of a specified category
 		void scroll(bool to_bottom, size_type cat_pos = ::nana::npos);
-		void scroll(bool to_bottom, const index_pair& pos);
+
+		/// Scrolls the view to show an item sepcified by absolute position at top/bottom of the listbox.
+		void scroll(bool to_bottom, const index_pair& abs_pos);
 
 		/// Appends a new column with a header text and the specified width at the end, and return it position
 		size_type append_header(std::string text_utf8, unsigned width = 120);

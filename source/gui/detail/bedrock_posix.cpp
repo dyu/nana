@@ -232,7 +232,7 @@ namespace detail
 		//No implementation for Linux
 	}
 
-	bool bedrock::emit(event_code evt_code, core_window_t* wd, const ::nana::event_arg& arg, bool ask_update, thread_context* thrd)
+	bool bedrock::emit(event_code evt_code, core_window_t* wd, const ::nana::event_arg& arg, bool ask_update, thread_context* thrd, const bool bForce__EmitInternal)
 	{
 		if(wd_manager().available(wd) == false)
 			return false;
@@ -245,22 +245,31 @@ namespace detail
 			_m_event_filter(evt_code, wd, thrd);
 		}
 
-		if(wd->other.upd_state == core_window_t::update_state::none)
-			wd->other.upd_state = core_window_t::update_state::lazy;
+		using update_state = basic_window::update_state;
 
-		_m_emit_core(evt_code, wd, false, arg);
+		if(wd->other.upd_state == update_state::none)
+			wd->other.upd_state = update_state::lazy;
 
-		//A child of wd may not be drawn if it was out of wd's range before wd resized,
-		//so refresh all children of wd when a resized occurs.
-		if(ask_update || (event_code::resized == evt_code))
+		_m_emit_core(evt_code, wd, false, arg, bForce__EmitInternal);
+
+		bool good_wd = false;
+		if(wd_manager().available(wd))
 		{
-			wd_manager().do_lazy_refresh(wd, false, (event_code::resized == evt_code));
+			//A child of wd may not be drawn if it was out of wd's range before wd resized,
+			//so refresh all children of wd when a resized occurs.
+			if(ask_update || (event_code::resized == evt_code) || (update_state::refreshed == wd->other.upd_state))
+			{
+				wd_manager().do_lazy_refresh(wd, false, (event_code::resized == evt_code));
+			}
+			else
+				wd->other.upd_state = update_state::none;
+
+			good_wd = true;
 		}
-		else if(wd_manager().available(wd))
-			wd->other.upd_state = core_window_t::update_state::none;
+		
 
 		if(thrd) thrd->event_window = prev_wd;
-		return true;
+		return good_wd;
 	}
 
 	void assign_arg(arg_mouse& arg, basic_window* wd, unsigned msg, const XEvent& evt)
@@ -396,7 +405,7 @@ namespace detail
 	}
 
 	template<typename Arg>
-	void draw_invoker(void(::nana::detail::drawer::*event_ptr)(const Arg&), basic_window* wd, const Arg& arg, bedrock::thread_context* thrd)
+	void draw_invoker(void(::nana::detail::drawer::*event_ptr)(const Arg&, const bool), basic_window* wd, const Arg& arg, bedrock::thread_context* thrd)
 	{
 		if(bedrock::instance().wd_manager().available(wd) == false)
 			return;
@@ -410,7 +419,7 @@ namespace detail
 		if(wd->other.upd_state == basic_window::update_state::none)
 			wd->other.upd_state = basic_window::update_state::lazy;
 
-		(wd->drawer.*event_ptr)(arg);
+		(wd->drawer.*event_ptr)(arg, false);
 		if(thrd) thrd->event_window = pre_wd;
 	}
 
@@ -438,8 +447,8 @@ namespace detail
 			keysym = keyboard::os_arrow_left + (keysym - XK_Left); break;
 		case XK_Insert:
 			keysym = keyboard::os_insert; break;
-		case XK_Delete:
-			keysym = keyboard::os_del; break;
+		case XK_Delete: case XK_KP_Delete:
+			keysym = keyboard::del; break;
 		case XK_Shift_L: case XK_Shift_R:	//shift
 			keysym = keyboard::os_shift; break;
 		case XK_Control_L: case XK_Control_R: //ctrl

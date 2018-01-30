@@ -91,19 +91,26 @@ namespace nana
 				{
 					return value_px_;
 				}
+
+				bool value_px_sync()
+				{
+					if (widget_)
+					{
+						auto value_px = (widget_->size().width - border_px * 2) * value_ / max_;
+
+						if (value_px != value_px_)
+						{
+							value_px_ = value_px;
+							return true;
+						}
+					}
+					return false;
+				}
 			private:
 				void _m_try_refresh()
 				{
-					if (nullptr == widget_)
-						return;
-
-					auto value_px = (widget_->size().width - border_px * 2) * value_ / max_;
-
-					if (value_px != value_px_)
-					{
-						value_px_ = value_px;
+					if (value_px_sync())
 						API::refresh_window(*widget_);
-					}
 				}
 			private:
 				nana::progress * widget_{ nullptr };
@@ -136,16 +143,17 @@ namespace nana
 			{	
 				const unsigned border_px = substance::border_px;
 
-				unsigned width = graph.width() - border_px * 2;
-				unsigned height = graph.height() - border_px * 2;
-
 				rectangle rt_val{ graph.size() };
+				auto const width = rt_val.width - border_px * 2;
 
 				rt_val.pare_off(static_cast<int>(border_px));
 
 				auto rt_bground = rt_val;
 				if (false == progress_->unknown(nullptr))
 				{
+					//Sync the value_px otherwise the progress is incorrect when it is resized.
+					progress_->value_px_sync();
+
 					rt_bground.x = static_cast<int>(progress_->value_px()) + static_cast<int>(border_px);
 					rt_bground.width -= progress_->value_px();
 

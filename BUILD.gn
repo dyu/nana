@@ -269,6 +269,8 @@ static_library("gui") {
   deps = [ ":base" ]
 }
 
+if (!is_win) {
+
 config("audio_config") {
   if (!is_win) {
     libs = [ "asound" ]
@@ -297,14 +299,20 @@ static_library("audio") {
   deps = [ ":base" ]
 }
 
+}
+
 # ==================================================
 # executables
+
+if (!is_win) {
 
 executable("audio_player_simple") {
   sources = [ "examples/audio_player_simple.cpp" ]
   deps = [
     ":audio",
   ]
+}
+
 }
 
 executable("helloworld") {

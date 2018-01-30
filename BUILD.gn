@@ -269,6 +269,12 @@ static_library("gui") {
   deps = [ ":base" ]
 }
 
+config("audio_config") {
+  if (!is_win) {
+    libs = [ "asound" ]
+  }
+}
+
 static_library("audio") {
   sources = [
     "include/nana/audio/player.hpp",
@@ -282,17 +288,24 @@ static_library("audio") {
     "source/audio/detail/audio_stream.cpp",
   ]
   
-  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
+  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR", "NANA_ENABLE_AUDIO" ]
   if (!is_win) {
     defines += [ "linux" ]
   }
   
-  public_configs = [ ":nana_config" ]
+  public_configs = [ ":nana_config", ":audio_config" ]
   deps = [ ":base" ]
 }
 
 # ==================================================
 # executables
+
+executable("audio_player_simple") {
+  sources = [ "examples/audio_player_simple.cpp" ]
+  deps = [
+    ":audio",
+  ]
+}
 
 executable("helloworld") {
   sources = [ "examples/helloworld.cpp" ]
@@ -669,3 +682,4 @@ executable("a_group_impl") {
     ":gui",
   ]
 }
+

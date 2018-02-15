@@ -185,7 +185,7 @@ int main()
     //Use class place to layout the widgets.
     place place(fm);
     place.div(  "vert<procedure weight=12% margin=[0,4,0]><result weight=12% margin=[0,8,0]>"
-                "<weight=2><opkeys margin=2 grid=[4, 5] gap=2 collapse(0,4,2,1)>");
+                "<weight=2><opkeys margin=2 grid=[4,5] gap=2 collapse(0,4,2,1)>");
     
     label procedure(fm), result(fm);
     

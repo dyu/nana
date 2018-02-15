@@ -17,10 +17,21 @@ static const char LAYOUT[] =
 ;
 
 static const char* LINKS[] = {
-    "foo",
-    "bar",
-    "baz"
+    "<color=0x0080FF target=\"0\">foo</>",
+    "<color=0x0080FF target=\"1\">bar</>",
+    "<color=0x0080FF target=\"2\">baz</>"
 };
+
+void links$$clicked(nana::label::command cmd, const std::string& target)
+{
+    if (nana::label::command::click == cmd)
+    {
+        // TODO
+        //nana::msgbox mb(target);
+        //mb << "the target \"" << target << "\" is clicked";
+        //mb();
+    }
+}
 
 int main(int argc, char* argv[])
 {
@@ -51,6 +62,8 @@ int main(int argc, char* argv[])
         auto& link = links.front();
         
         link.text_align(nana::align::center)
+            .format(true)
+            .add_format_listener(links$$clicked)
             .caption(text);
         
         place["footer_"] << link;

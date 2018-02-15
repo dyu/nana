@@ -45,7 +45,7 @@ void links$$clicked(nana::label::command cmd, const std::string& target)
 
 int main(int argc, char* argv[])
 {
-    nana::form fm{nana::API::make_center(1005,710)};
+    nana::form fm{ {273, 0, 1005,710} };
     
     fm.caption("Layout example");
     fm.bgcolor(nana::color_rgb(0xFFFFFF));

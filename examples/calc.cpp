@@ -210,24 +210,27 @@ int main()
     
     for (auto key : keys)
     {
-        std::string Key;
+        std::string caption;
         if (key == 'm')
-            Key = plus_minus;  
+            caption = plus_minus;  
         else
-            Key = std::string(1, key);
+            caption = std::string(1, key);
         
         op_keys.emplace_front(fm.handle());
         auto & key_btn = op_keys.front();
         bts[key]=&key_btn;
         
-        key_btn.caption(Key);
+        key_btn.caption(caption);
         key_btn.typeface(keyfont);
         
         if ('=' == key)
         {
-            key_btn.bgcolor(color_rgb(0x2E8B57));
+            key_btn.bgcolor(color_rgb(0x0080FF));
             key_btn.fgcolor(color_rgb(0xFFFFFF));
-            
+        }
+        else
+        {
+            key_btn.bgcolor(color_rgb(0xFFFFFF));
         }
         place["opkeys"] << key_btn;
         

@@ -12,7 +12,7 @@ static const char LAYOUT[] =
 ">"
 "<content_"
   "<left_><right_>"
-  ">"
+">"
 "<footer_ weight=20 margin=[0,30%]>"
 ;
 

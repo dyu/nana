@@ -21,8 +21,6 @@
 
 #include <thread>
 
-using namespace nana;
-
 // workaround insufficiency in VS2013.
 #if defined(_MSC_VER) && (_MSC_VER < 1900)  //VS2013
 const std::string plus_minus(to_utf8(L"\u00b1")  ;   // 0xB1    u8"\261"
@@ -38,15 +36,15 @@ struct StateInfo
     std::string    operation;
     double         oprand { 0 };
     double         outcome{ 0 };
-    label&         procedure;
-    label&         result;
+    nana::label&   procedure;
+    nana::label&   result;
     
-    StateInfo(label& proc, label& resl)
+    StateInfo(nana::label& proc, nana::label& resl)
         : operation("+"),  procedure(proc), result(resl)
     {   }
 };
 
-void numkey_pressed(StateInfo& state, const arg_click& arg)
+void numkey_pressed(StateInfo& state, const nana::arg_click& arg)
 {
     if (state.opstate != StateInfo::state::init)
     {
@@ -63,16 +61,16 @@ void numkey_pressed(StateInfo& state, const arg_click& arg)
     if (rstr == "0")
         rstr.clear();
     
-    std::string d = API::window_caption(arg.window_handle);
+    std::string d = nana::API::window_caption(arg.window_handle);
     if ("." != d)
         state.result.caption(rstr + d);
     else if (rstr.npos == rstr.find('.'))
         state.result.caption(rstr.size() ? rstr + d : std::string("0."));
 }
 
-void opkey_pressed(StateInfo& state, const arg_click& arg)
+void opkey_pressed(StateInfo& state, const nana::arg_click& arg)
 {
-    std::string d = API::window_caption(arg.window_handle) ;
+    std::string d = nana::API::window_caption(arg.window_handle) ;
     if ("C" == d)
     {
         state.result.caption("0");
@@ -82,7 +80,7 @@ void opkey_pressed(StateInfo& state, const arg_click& arg)
         state.operation = "+";
         return;
     }
-    else if ( plus_minus == d)
+    else if (plus_minus == d)
     {
         auto s = state.result.caption();
         if (s.size())
@@ -178,16 +176,16 @@ void opkey_pressed(StateInfo& state, const arg_click& arg)
 
 int main()
 {
-    form fm;
+    nana::form fm;
     fm.caption(("Calculator"));
-    fm.bgcolor(color_rgb(0xFFFFFF));
+    fm.bgcolor(nana::color_rgb(0xFFFFFF));
     
     //Use class place to layout the widgets.
-    place place(fm);
+    nana::place place(fm);
     place.div(  "vert<procedure weight=12% margin=[0,4,0]><result weight=12% margin=[0,8,0]>"
                 "<weight=2><opkeys margin=2 grid=[4,5] gap=2 collapse(0,4,2,1)>");
     
-    label procedure(fm), result(fm);
+    nana::label procedure(fm), result(fm);
     
     //procedure.bgcolor(color_rgb(0xFFFFFF));
     //result.bgcolor(color_rgb(0xFFFFFF));
@@ -202,11 +200,11 @@ int main()
     
     StateInfo state(procedure, result);
     
-    std::forward_list<button> btn_list;
-    std::map<char,button*> btn_map;
+    std::forward_list<nana::button> btn_list;
+    std::map<char,nana::button*> btn_map;
     
     char keys[] = "Cm%/789X456-123+0.="; // \261
-    paint::font keyfont("", 10, true);
+    nana::paint::font keyfont("", 10, true);
     
     for (auto key : keys)
     {
@@ -227,18 +225,18 @@ int main()
         
         if ('=' == key)
         {
-            key_btn.bgcolor(color_rgb(0x0080FF));
-            key_btn.fgcolor(color_rgb(0xFFFFFF));
+            key_btn.bgcolor(nana::color_rgb(0x0080FF));
+            key_btn.fgcolor(nana::color_rgb(0xFFFFFF));
         }
         else
         {
-            key_btn.bgcolor(color_rgb(0xFFFFFF));
+            key_btn.bgcolor(nana::color_rgb(0xFFFFFF));
         }
         
         place["opkeys"] << key_btn;
         
         //Make event answer for keys.
-        key_btn.events().click([key, &state](const arg_click& arg)
+        key_btn.events().click([key, &state](const nana::arg_click& arg)
         {
             if (('0' <= key && key <= '9') || ('.' == key))
                 numkey_pressed(state, arg);
@@ -249,5 +247,5 @@ int main()
     
     place.collocate();
     fm.show();
-    exec();
+    nana::exec();
 }

@@ -174,16 +174,20 @@ void opkey_pressed(StateInfo& state, const nana::arg_click& arg)
     state.result.caption(outstr);
 }
 
+static const char LAYOUT[] =
+"vert<procedure weight=12% margin=[0,4,0]><result weight=12% margin=[0,8,0]>"
+"<weight=2><opkeys margin=2 grid=[4,5] gap=2 collapse(0,4,2,1)>"
+;
+
 int main()
 {
     nana::form fm;
     fm.caption(("Calculator"));
     fm.bgcolor(nana::color_rgb(0xFFFFFF));
     
-    //Use class place to layout the widgets.
+    //Use class place to LAYOUT the widgets.
     nana::place place(fm);
-    place.div(  "vert<procedure weight=12% margin=[0,4,0]><result weight=12% margin=[0,8,0]>"
-                "<weight=2><opkeys margin=2 grid=[4,5] gap=2 collapse(0,4,2,1)>");
+    place.div(LAYOUT);
     
     nana::label procedure(fm), result(fm);
     

@@ -12,13 +12,15 @@ int main()
 {
 
     form fm{API::make_center(600,400)};
-    //fm.bgcolor(colors::mint_cream );
+    fm.bgcolor(color_rgb(0xFFFFFF));
     place plc(fm);
+    
     std::vector<std::unique_ptr<button>> btns;
 
     // the most external widgets
     label  out   {fm,  "This label is out of any group"};
     group  ext_gr{fm,  "An external <bold=true, color=blue>Group:</>", true };
+    ext_gr.bgcolor(color_rgb(0xFFFFFF));
 
     plc.div("vert gap=10 margin=5 <lab weight=30><all> ");
     plc["lab"]  << out ;
@@ -26,7 +28,10 @@ int main()
 
     // the external group contain:
     group grp_left {ext_gr,  ("A new <bold=true, color=0xff0000, font=\"Consolas\">Group:</>"), true };
+    grp_left.bgcolor(color_rgb(0xFFFFFF));
+    
     group grp_right{ext_gr,  ("A right <bold=true, color=0xff0000, font=\"Consolas\">Group:</>"), true};
+    grp_right.bgcolor(color_rgb(0xFFFFFF));
 
     ext_gr.div("horizontal gap=3 margin=20  < <left_field> | 70% <right_field>> ");
     ext_gr["left_field"]  << grp_left;
@@ -40,14 +45,14 @@ int main()
     group nested(grp_right.handle());
     label  lab {grp_right,  "A simple label "};
     button b1  {grp_right,  "add button"};
-	b1.events().click([&grp_left, &btns]
-	{
-		btns.emplace_back(new button( grp_left,  "Button" ));
+    b1.events().click([&grp_left, &btns]
+    {
+        btns.emplace_back(new button( grp_left,  "Button" ));
 
-		grp_left["buttons"] << *btns.back();
-		grp_left.collocate();
-		std::cout << "button added\n";
-	});
+        grp_left["buttons"] << *btns.back();
+        grp_left.collocate();
+        std::cout << "button added\n";
+    });
     button b2  {grp_right,  "button2"};
     button b3  {grp_right,  "button3"};
     grp_right.div( "<vertical margin=2 gap= 2 <vert lab> | 40% < <left_field> | 70% <right_field>> >");
@@ -68,22 +73,22 @@ int main()
     //grp1.plc.collocate();    // OK
 
 
-	fm.show();
+    fm.show();
 
-	::nana::exec(
+    ::nana::exec(
 
 #ifdef NANA_AUTOMATIC_GUI_TESTING
 
-		1, 1, [&b1, &out, &grp_right]()
-	{
-		click(b1);
-		click(b1);
-		click(b1);
-		click(out);
-		click(grp_right);
+        1, 1, [&b1, &out, &grp_right]()
+    {
+        click(b1);
+        click(b1);
+        click(b1);
+        click(out);
+        click(grp_right);
 
-	}
+    }
 #endif
 
-	);
+    );
 }

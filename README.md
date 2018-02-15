@@ -37,7 +37,7 @@ Other branches:
 * **hotfix** is meant to prepare for a new release, and fixes some bugs from the corresponding tag on the master branch.
 
 ## Build via GN
-1. `git clone --depth 1 --single-branch -b ns https://github.com/dyu/gn-build`
+1. `git clone --depth 1 --single-branch -b cpp14 https://github.com/dyu/gn-build`
 
 2. `echo 'buildconfig = "//gn-build/config/BUILDCONFIG.gn"' > .gn`
    On windows, exclude the single quote.

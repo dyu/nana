@@ -180,6 +180,7 @@ int main()
 {
     form fm;
     fm.caption(("Calculator"));
+    fm.bgcolor(color_rgb(0xFFFFFF));
     
     //Use class place to layout the widgets.
     place place(fm);
@@ -188,9 +189,8 @@ int main()
     
     label procedure(fm), result(fm);
     
-    fm.bgcolor(color_rgb(0xFFFFFF));
-    procedure.bgcolor(color_rgb(0xFFFFFF));
-    result.bgcolor(color_rgb(0xFFFFFF));
+    //procedure.bgcolor(color_rgb(0xFFFFFF));
+    //result.bgcolor(color_rgb(0xFFFFFF));
 
     //Make the label right aligned.
     procedure.text_align(nana::align::right);

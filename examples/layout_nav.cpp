@@ -28,7 +28,7 @@ static std::string current_target = "content_0";
 
 void links$$clicked(nana::label::command cmd, const std::string& target)
 {
-    int selected = target.back() - 40;
+    int selected = target.back() - 48;
     if (nana::label::command::click != cmd || selected == current_selected)
         return;
     

@@ -1,5 +1,6 @@
 #include <nana/gui/wvl.hpp>
 #include <nana/gui/widgets/label.hpp>
+#include <forward_list>
 
 static const char LAYOUT[] =
 //"<main_ margin=2 grid=[2,1] gap=2>"
@@ -12,9 +13,7 @@ static const char LAYOUT[] =
 "<content_"
   "<left_><right_>"
   ">"
-"<footer_ weight=20"
-  "<bottom_>"
-">"
+"<footer_ weight=20 margin=[0,30%]>"
 ;
 
 static const char* LINKS[] = {
@@ -35,18 +34,28 @@ int main(int argc, char* argv[])
     
     nana::label
         top{fm, "top"},
-        bottom{fm, "bottom"},
         left{fm, "left"},
         right{fm, "right"};
     
     top.text_align(nana::align::center);
-    bottom.text_align(nana::align::center);
+    //bottom.text_align(nana::align::center);
     
     place["left_"] << left;
     place["right_"] << right;
     
     place["top_"] << top;
-    place["bottom_"] << bottom;
+    
+    std::forward_list<nana::label> links;
+    for (auto text : LINKS)
+    {
+        links.emplace_front(fm.handle());
+        auto& link = links.front();
+        
+        link.caption(text);
+        link.text_align(nana::align::center);
+        
+        place["footer_"] << link;
+    }
     
     place.collocate();
     fm.show();

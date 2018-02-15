@@ -64,13 +64,10 @@ void numkey_pressed(StateInfo& state, const arg_click& arg)
         rstr.clear();
     
     std::string d = API::window_caption(arg.window_handle);
-    if (d == ".")
-    {
-        if (rstr.find('.') == rstr.npos)
-            state.result.caption(rstr.size() ? rstr + d : std::string("0."));
-    }
-    else
+    if ("." != d)
         state.result.caption(rstr + d);
+    else if (rstr.npos == rstr.find('.'))
+        state.result.caption(rstr.size() ? rstr + d : std::string("0."));
 }
 
 void opkey_pressed(StateInfo& state, const arg_click& arg)

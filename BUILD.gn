@@ -347,6 +347,13 @@ executable("calc") {
   ]
 }
 
+executable("layout") {
+  sources = [ "examples/layout.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
 
 executable("file_explorer") {
   sources = [ "examples/file_explorer.cpp" ]

@@ -24,7 +24,7 @@ static const char* LINKS[] = {
 
 static nana::place* current_place;
 static int current_selected = 0;
-static std::string current_target = "content_0";
+static std::string current_target("content_0");
 
 void links$$clicked(nana::label::command cmd, const std::string& target)
 {
@@ -85,9 +85,10 @@ int main(int argc, char* argv[])
         .format(true);
     place["footer_"] << bottom;
     
+    place.collocate();
     place.field_display("content_1", false);
     place.field_display("content_2", false);
-    place.collocate();
+    
     fm.show();
     nana::exec();
     

@@ -50,7 +50,8 @@ int main(int argc, char* argv[])
         links.emplace_front(fm.handle());
         auto& link = links.front();
         
-        link.text_align(nana::align::center).caption(text);
+        link.text_align(nana::align::center)
+            .caption(text);
         
         place["footer_"] << link;
     }

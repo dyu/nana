@@ -38,7 +38,6 @@ int main(int argc, char* argv[])
         right{fm, "right"};
     
     top.text_align(nana::align::center);
-    //bottom.text_align(nana::align::center);
     
     place["left_"] << left;
     place["right_"] << right;
@@ -51,8 +50,7 @@ int main(int argc, char* argv[])
         links.emplace_front(fm.handle());
         auto& link = links.front();
         
-        link.caption(text);
-        link.text_align(nana::align::center);
+        link.text_align(nana::align::center).caption(text);
         
         place["footer_"] << link;
     }

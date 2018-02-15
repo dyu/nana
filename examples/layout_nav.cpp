@@ -8,38 +8,39 @@ static const char LAYOUT[] =
 //"<left_><right_ weight=70%>"
 "vert margin=5"
 "<header_ weight=20 margin=[0,30%]>"
-"<content_"
+"<content_0"
   "<left_><right_>"
 ">"
+"<content_1>"
+"<content_2>"
 "<footer_ weight=20>"
 ;
 
 static const char* LINKS[] = {
-    "<color=0x0080FF target=\"0\">Home</>",
-    "<color=0x0080FF target=\"1\">Test</>",
-    "<color=0x0080FF target=\"2\">About</>"
+    "<color=0x0080FF target=\"content_0\">Home</>",
+    "<color=0x0080FF target=\"content_1\">Test</>",
+    "<color=0x0080FF target=\"content_2\">About</>"
 };
 
-static int current_selected = -1;
+static nana::place* current_place;
+static int current_selected = 0;
+static std::string current_target = "content_0";
+
 void links$$clicked(nana::label::command cmd, const std::string& target)
 {
-    if (nana::label::command::click == cmd)
-    {
-        int selected = std::atoi(target.c_str());
-        switch (selected)
-        {
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                break;
-        }
-        // TODO
-        //nana::msgbox mb(target);
-        //mb << "the target \"" << target << "\" is clicked";
-        //mb();
-    }
+    int selected = target.back() - 40;
+    if (nana::label::command::click != cmd || selected == current_selected)
+        return;
+    
+    // hide current
+    current_place->field_display(current_target.c_str(), false);
+    
+    // set current
+    current_selected = selected;
+    current_target[current_target.size() - 1] = target.back();
+    
+    // show
+    current_place->field_display(target.c_str(), true);
 }
 
 int main(int argc, char* argv[])
@@ -52,13 +53,19 @@ int main(int argc, char* argv[])
     nana::place place{fm};
     place.div(LAYOUT);
     
+    current_place = &place;
+    
     nana::label
         bottom{fm, "Copyright 2018 <color=0x0080FF>David Yu</>"},
+        c1{fm, "c1"},
+        c2{fm, "c2"},
         left{fm, "left"},
         right{fm, "right"};
     
     place["left_"] << left;
     place["right_"] << right;
+    place["content_1"] << c1;
+    place["content_2"] << c2;
     
     std::forward_list<nana::label> links;
     for (auto text : LINKS)
@@ -78,6 +85,8 @@ int main(int argc, char* argv[])
         .format(true);
     place["footer_"] << bottom;
     
+    place.field_display("content_1", false);
+    place.field_display("content_2", false);
     place.collocate();
     fm.show();
     nana::exec();

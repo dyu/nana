@@ -38,8 +38,8 @@ struct StateInfo
     std::string    operation;
     double         oprand { 0 };
     double         outcome{ 0 };
-    label        & procedure;
-    label        & result;
+    label&         procedure;
+    label&         result;
     
     StateInfo(label& proc, label& resl)
         : operation("+"),  procedure(proc), result(resl)
@@ -202,8 +202,8 @@ int main()
     
     StateInfo state(procedure, result);
     
-    std::forward_list<button> op_keys;
-    std::map<char,button*> bts;
+    std::forward_list<button> btn_list;
+    std::map<char,button*> btn_map;
     
     char keys[] = "Cm%/789X456-123+0.="; // \261
     paint::font keyfont("", 10, true);
@@ -216,9 +216,11 @@ int main()
         else
             caption = std::string(1, key);
         
-        op_keys.emplace_front(fm.handle());
-        auto & key_btn = op_keys.front();
-        bts[key]=&key_btn;
+        btn_list.emplace_front(fm.handle());
+        
+        auto& key_btn = btn_list.front();
+        
+        btn_map[key] = &key_btn;
         
         key_btn.caption(caption);
         key_btn.typeface(keyfont);
@@ -232,6 +234,7 @@ int main()
         {
             key_btn.bgcolor(color_rgb(0xFFFFFF));
         }
+        
         place["opkeys"] << key_btn;
         
         //Make event answer for keys.

@@ -339,6 +339,15 @@ executable("calculator") {
   ]
 }
 
+executable("calc") {
+  sources = [ "examples/calc.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
+
 executable("file_explorer") {
   sources = [ "examples/file_explorer.cpp" ]
   deps = [

@@ -36,6 +36,11 @@ Other branches:
 * **features** are used to develop new features for the upcoming or a distant future release. Feature branches are named as 'feature-FEATURENAME'.
 * **hotfix** is meant to prepare for a new release, and fixes some bugs from the corresponding tag on the master branch.
 
+## Install linux deps
+```sh
+sudo apt-get install libasound-dev libx11-dev libxft-dev
+```
+
 ## Build via GN
 1. `git clone --depth 1 --single-branch -b cpp14 https://github.com/dyu/gn-build`
 

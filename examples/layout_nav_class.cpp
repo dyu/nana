@@ -52,6 +52,7 @@ struct App
         
         // show
         place.field_display(target.c_str(), true);
+        place.collocate();
     }
     
     int show()
@@ -86,9 +87,9 @@ struct App
             .format(true);
         place["footer_"] << bottom;
         
-        place.collocate();
         place.field_display("content_1", false);
         place.field_display("content_2", false);
+        place.collocate();
         
         fm.show();
         nana::exec();

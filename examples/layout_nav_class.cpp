@@ -46,7 +46,7 @@ struct App
     int current_selected = 0;
     std::string current_target = "content_0";
     
-    void links$$clicked(nana::label::command cmd, const std::string& target)
+    void links$$(nana::label::command cmd, const std::string& target)
     {
         int selected = target.back() - 48;
         if (nana::label::command::click != cmd || selected == current_selected)
@@ -74,7 +74,7 @@ struct App
         place["content_2"] << c2;
         
         auto listener = [this](nana::label::command cmd, const std::string& target) {
-            this->links$$clicked(cmd, target);
+            this->links$$(cmd, target);
         };
                 
         for (auto text : LINKS)

@@ -22,11 +22,20 @@ static const char* LINKS[] = {
     "<color=0x0080FF target=\"content_2\">About</>"
 };
 
+struct Form : nana::form
+{
+    public:
+    Form(nana::rectangle rect, unsigned bg) : nana::form(rect)
+    {
+        bgcolor(nana::color_rgb(bg));
+    }
+};
+
 struct App
 {
     std::forward_list<nana::label> links;
     
-    nana::form fm{ {273, 0, 1005,710} };
+    Form fm{ {273, 0, 1005,710}, 0xFFFFFF };
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
     nana::label c1{ fm, "c1" };

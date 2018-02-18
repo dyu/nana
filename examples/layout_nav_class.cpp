@@ -25,8 +25,9 @@ static const char* LINKS[] = {
 struct Form : nana::form
 {
     public:
-    Form(nana::rectangle rect, unsigned bg) : nana::form(rect)
+    Form(nana::rectangle rect, const char* title, unsigned bg) : nana::form(rect)
     {
+        caption(title);
         bgcolor(nana::color_rgb(bg));
     }
 };
@@ -35,7 +36,7 @@ struct App
 {
     std::forward_list<nana::label> links;
     
-    Form fm{ {273, 0, 1005,710}, 0xFFFFFF };
+    Form fm{ {273, 0, 1005,710}, "Layout example", 0xFFFFFF };
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
     nana::label c1{ fm, "c1" };
@@ -66,8 +67,6 @@ struct App
     
     int show()
     {
-        fm.caption("Layout example");
-        fm.bgcolor(nana::color_rgb(0xFFFFFF));
         place.div(LAYOUT);
         
         place["left_"] << left;

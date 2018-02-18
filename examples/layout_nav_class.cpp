@@ -24,7 +24,6 @@ static const char* LINKS[] = {
 
 struct Form : nana::form
 {
-    public:
     Form(nana::rectangle rect, const char* title, unsigned bg) : nana::form(rect)
     {
         caption(title);

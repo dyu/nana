@@ -26,12 +26,12 @@ namespace ui {
     
 } // ui
 
-struct Content0 : ui::Panel
+struct Home : ui::Panel
 {
     nana::label left{ *this, "left" };
     nana::label right{ *this, "right" };
     
-    Content0(nana::widget& owner) : Panel(owner, 
+    Home(nana::widget& owner) : Panel(owner, 
         "<left_ weight=30%>"
         "<right_>"
     )
@@ -65,9 +65,9 @@ struct App
         "<content_1>"
         "<content_2>"
     };
-    Content0 c0{ content };
-    nana::label c1{ content, "c1" };
-    nana::label c2{ content, "c2" };
+    Home home{ content };
+    nana::label test{ content, "c1" };
+    nana::label about{ content, "c2" };
     
     App()
     {
@@ -78,15 +78,15 @@ struct App
             "<footer_ weight=20>"
         );
         
-        c2.bgcolor(nana::color_rgb(0xFCFCFC));
+        about.bgcolor(nana::color_rgb(0xFCFCFC));
         
         // content
-        content.place["content_0"] << c0;
+        content.place["content_0"] << home;
         
-        content.place["content_1"] << c1;
+        content.place["content_1"] << test;
         content.place.field_display("content_1", false);
         
-        content.place["content_2"] << c2;
+        content.place["content_2"] << about;
         content.place.field_display("content_2", false);
         
         content.place.collocate();

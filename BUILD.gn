@@ -371,6 +371,14 @@ executable("layout_nav_class") {
   ]
 }
 
+executable("layout_nav_panel") {
+  sources = [ "examples/layout_nav_panel.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("file_explorer") {
   sources = [ "examples/file_explorer.cpp" ]
   deps = [

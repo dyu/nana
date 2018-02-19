@@ -30,6 +30,8 @@ static const char* LINKS[] = {
 struct App
 {
     std::forward_list<nana::label> links;
+    int current_selected{ 0 };
+    std::string current_target{ "content_0" };
     
     Form fm{ {273, 0, 1005, 710}, "Layout example", 0xFFFFFF };
     nana::place place{ fm };
@@ -47,9 +49,6 @@ struct App
     nana::label right { content, "right" };
     nana::label c1{ content, "c1" };
     nana::label c2{ content, "c2" };
-    
-    int current_selected{ 0 };
-    std::string current_target{ "content_0" };
     
     App()
     {

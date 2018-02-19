@@ -9,9 +9,7 @@ static const char LAYOUT[] =
 //"<left_><right_ weight=70%>"
 "vert margin=5"
 "<header_ weight=20 margin=[0,30%]>"
-"<content_0>"
-"<content_1>"
-"<content_2>"
+"<content_>"
 "<footer_ weight=20>"
 ;
 
@@ -46,11 +44,20 @@ struct App
     Form fm{ {273, 0, 1005, 710}, "Layout example", 0xFFFFFF };
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
-    nana::label c1{ fm, "c1" };
-    nana::label c2{ fm, "c2" };
-    Panel c0 {fm, "<left_><right_>"};
-    nana::label left{ c0, "left" };
-    nana::label right { c0, "right" };
+    Panel content {fm, 
+        "vert <content_0 <left_><right_>>"
+        "<content_1>"
+        "<content_2>"
+    };
+    nana::label left{ content, "left" };
+    nana::label right { content, "right" };
+    nana::label c1{ content, "c1" };
+    nana::label c2{ content, "c2" };
+    
+    App()
+    {
+        place.div(LAYOUT);
+    }
     
     int current_selected = 0;
     std::string current_target = "content_0";
@@ -62,27 +69,31 @@ struct App
             return;
         
         // hide current
-        place.field_display(current_target.c_str(), false);
+        content.place.field_display(current_target.c_str(), false);
         
         // set current
         current_selected = selected;
         current_target[current_target.size() - 1] = target.back();
         
         // show
-        place.field_display(target.c_str(), true);
-        place.collocate();
+        content.place.field_display(target.c_str(), true);
+        content.place.collocate();
     }
     
     int show()
     {
-        place.div(LAYOUT);
+        content.place["left_"] << left;
+        content.place["right_"] << right;
         
-        c0.place["left_"] << left;
-        c0.place["right_"] << right;
+        content.place["content_1"] << c1;
+        content.place.field_display("content_1", false);
         
-        place["content_0"] << c0;
-        place["content_1"] << c1;
-        place["content_2"] << c2;
+        content.place["content_2"] << c2;
+        content.place.field_display("content_2", false);
+        
+        content.place.collocate();
+        
+        place["content_"] << content;
         
         auto listener = [this](nana::label::command cmd, const std::string& target) {
             this->links$$(cmd, target);
@@ -105,10 +116,7 @@ struct App
             .format(true);
         place["footer_"] << bottom;
         
-        place.field_display("content_1", false);
-        place.field_display("content_2", false);
         place.collocate();
-        c0.place.collocate();
         
         fm.show();
         nana::exec();

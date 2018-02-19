@@ -35,7 +35,7 @@ struct App
 {
     std::forward_list<nana::label> links;
     
-    Form fm{ {273, 0, 1005,710}, "Layout example", 0xFFFFFF };
+    Form fm{ {273, 0, 1005, 710}, "Layout example", 0xFFFFFF };
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
     nana::label c1{ fm, "c1" };

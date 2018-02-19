@@ -14,10 +14,29 @@ struct Form : nana::form
 
 struct Panel : nana::panel<true>
 {
-    nana::place place{*this};
+    nana::place place{ *this };
+    
     Panel(nana::widget& owner, const char* layout) : nana::panel<true>(owner)
     {
         place.div(layout);
+    }
+};
+
+struct Content0 : Panel
+{
+    nana::label left{ *this, "left" };
+    nana::label right{ *this, "right" };
+    
+    Content0(nana::widget& owner) : Panel(owner, 
+        "<left_ weight=30%>"
+        "<right_>"
+    )
+    {
+        left.bgcolor(nana::color_rgb(0xFAFAFA));
+        
+        place["left_"] << left;
+        place["right_"] << right;
+        place.collocate();
     }
 };
 
@@ -38,15 +57,11 @@ struct App
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
     Panel content{ fm,
         "vert"
-        "<content_0"
-          "<left_ weight=30%>"
-          "<right_>"
-        ">"
+        "<content_0>"
         "<content_1>"
         "<content_2>"
     };
-    nana::label left{ content, "left" };
-    nana::label right { content, "right" };
+    Content0 c0{ content };
     nana::label c1{ content, "c1" };
     nana::label c2{ content, "c2" };
     
@@ -60,10 +75,8 @@ struct App
         );
         
         // content
-        content.place["left_"] << left;
-        content.place["right_"] << right;
+        content.place["content_0"] << c0;
         
-        left.bgcolor(nana::color_rgb(0xFCFCFC));
         c2.bgcolor(nana::color_rgb(0xFCFCFC));
         
         content.place["content_1"] << c1;

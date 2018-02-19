@@ -34,7 +34,7 @@ struct App
     Form fm{ {273, 0, 1005, 710}, "Layout example", 0xFFFFFF };
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
-    Panel content {fm, 
+    Panel content{ fm,
         "vert <content_0 <left_><right_>>"
         "<content_1>"
         "<content_2>"
@@ -44,8 +44,8 @@ struct App
     nana::label c1{ content, "c1" };
     nana::label c2{ content, "c2" };
     
-    int current_selected = 0;
-    std::string current_target = "content_0";
+    int current_selected{ 0 };
+    std::string current_target{ "content_0" };
     
     App()
     {

@@ -1,6 +1,7 @@
 #include <nana/gui/wvl.hpp>
 #include <nana/gui/widgets/label.hpp>
 #include <nana/gui/widgets/panel.hpp>
+#include <nana/gui/widgets/picture.hpp>
 #include <forward_list>
 
 namespace ui {
@@ -45,9 +46,9 @@ struct Home : ui::Panel
 };
 
 static const char* LINKS[] = {
-    "<color=0x0080FF target=\"content_0\">Home</>",
-    "<color=0x0080FF target=\"content_1\">Test</>",
-    "<color=0x0080FF target=\"content_2\">About</>"
+    "<color=0x0080FF size=11 target=\"content_0\">Home</>",
+    "<color=0x0080FF size=11 target=\"content_1\">Test</>",
+    "<color=0x0080FF size=11 target=\"content_2\">About</>"
 };
 
 struct App
@@ -73,7 +74,7 @@ struct App
     {
         place.div(
             "vert margin=5"
-            "<header_ weight=20 margin=[0,30%]>"
+            "<header_ weight=20 margin=[0,30%] arrange=[18]>"
             "<content_>"
             "<footer_ weight=20>"
         );
@@ -96,10 +97,10 @@ struct App
         place["footer_"] << bottom.text_align(nana::align::center).format(true);
     }
     
-    void links$$(nana::label::command cmd, const std::string& target)
+    void links$$(const std::string& target)
     {
         int selected = target.back() - 48;
-        if (nana::label::command::click != cmd || selected == current_selected)
+        if (selected == current_selected)
             return;
         
         // hide current
@@ -116,9 +117,20 @@ struct App
     
     int show()
     {
+        nana::picture menu(fm);
+        
+        menu.transparent(true);
+        menu.load(nana::paint::image("examples/assets/menu18x18.ico"));
+        menu.events().click([this](const nana::arg_click& arg){
+            this->links$$("content_0");
+        });
+        
+        place["header_"] << menu;
+        
         // header
         auto listener = [this](nana::label::command cmd, const std::string& target) {
-            this->links$$(cmd, target);
+            if (nana::label::command::click == cmd)
+                this->links$$(target);
         };
         
         for (auto text : LINKS)

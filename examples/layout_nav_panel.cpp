@@ -25,6 +25,22 @@ namespace ui {
         }
     };
     
+    struct Icon : nana::picture
+    {
+        Icon(nana::widget& owner, const char* icon, bool cursor_hand = false) : nana::picture(owner)
+        {
+            load(nana::paint::image(icon));
+            transparent(true);
+            
+            if (!cursor_hand)
+                return;
+            
+            events().mouse_move([this](const nana::arg_mouse& arg) {
+                cursor(nana::cursor::hand);
+            });
+        }
+    };
+    
 } // ui
 
 struct Home : ui::Panel
@@ -117,17 +133,10 @@ struct App
     
     int show()
     {
-        nana::picture menu(fm);
-        
-        menu.transparent(true);
-        menu.load(nana::paint::image("examples/assets/menu18x18.ico"));
+        ui::Icon menu(fm, "examples/assets/menu18x18.ico", true);
         menu.events().click([this](const nana::arg_click& arg) {
             this->links$$("content_0");
         });
-        menu.events().mouse_move([&menu](const nana::arg_mouse& arg) {
-            menu.cursor(nana::cursor::hand);
-        });
-        
         place["header_"] << menu;
         
         // header

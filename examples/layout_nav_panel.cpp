@@ -3,22 +3,6 @@
 #include <nana/gui/widgets/panel.hpp>
 #include <forward_list>
 
-static const char LAYOUT[] =
-//"<main_ margin=2 grid=[2,1] gap=2>"
-//"<left_>|70%<right_>"
-//"<left_><right_ weight=70%>"
-"vert margin=5"
-"<header_ weight=20 margin=[0,30%]>"
-"<content_>"
-"<footer_ weight=20>"
-;
-
-static const char* LINKS[] = {
-    "<color=0x0080FF target=\"content_0\">Home</>",
-    "<color=0x0080FF target=\"content_1\">Test</>",
-    "<color=0x0080FF target=\"content_2\">About</>"
-};
-
 struct Form : nana::form
 {
     Form(nana::rectangle rect, const char* title, unsigned bg) : nana::form(rect)
@@ -35,6 +19,12 @@ struct Panel : nana::panel<true>
     {
         place.div(layout);
     }
+};
+
+static const char* LINKS[] = {
+    "<color=0x0080FF target=\"content_0\">Home</>",
+    "<color=0x0080FF target=\"content_1\">Test</>",
+    "<color=0x0080FF target=\"content_2\">About</>"
 };
 
 struct App
@@ -54,13 +44,34 @@ struct App
     nana::label c1{ content, "c1" };
     nana::label c2{ content, "c2" };
     
-    App()
-    {
-        place.div(LAYOUT);
-    }
-    
     int current_selected = 0;
     std::string current_target = "content_0";
+    
+    App()
+    {
+        place.div(
+            "vert margin=5"
+            "<header_ weight=20 margin=[0,30%]>"
+            "<content_>"
+            "<footer_ weight=20>"
+        );
+        
+        // content
+        content.place["left_"] << left;
+        content.place["right_"] << right;
+        
+        content.place["content_1"] << c1;
+        content.place.field_display("content_1", false);
+        
+        content.place["content_2"] << c2;
+        content.place.field_display("content_2", false);
+        
+        content.place.collocate();
+        place["content_"] << content;
+        
+        // bottom
+        place["footer_"] << bottom.text_align(nana::align::center).format(true);
+    }
     
     void links$$(nana::label::command cmd, const std::string& target)
     {
@@ -82,23 +93,11 @@ struct App
     
     int show()
     {
-        content.place["left_"] << left;
-        content.place["right_"] << right;
-        
-        content.place["content_1"] << c1;
-        content.place.field_display("content_1", false);
-        
-        content.place["content_2"] << c2;
-        content.place.field_display("content_2", false);
-        
-        content.place.collocate();
-        
-        place["content_"] << content;
-        
+        // header
         auto listener = [this](nana::label::command cmd, const std::string& target) {
             this->links$$(cmd, target);
         };
-                
+        
         for (auto text : LINKS)
         {
             links.emplace_front(fm.handle());
@@ -112,15 +111,9 @@ struct App
             place["header_"] << link;
         }
         
-        bottom.text_align(nana::align::center)
-            .format(true);
-        place["footer_"] << bottom;
-        
         place.collocate();
-        
         fm.show();
         nana::exec();
-        
         return 0;
     }
 };

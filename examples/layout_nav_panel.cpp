@@ -35,7 +35,11 @@ struct App
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
     Panel content{ fm,
-        "vert <content_0 <left_><right_>>"
+        "vert"
+        "<content_0"
+          "<left_ weight=30%>"
+          "<right_>"
+        ">"
         "<content_1>"
         "<content_2>"
     };
@@ -59,6 +63,9 @@ struct App
         // content
         content.place["left_"] << left;
         content.place["right_"] << right;
+        
+        left.bgcolor(nana::color_rgb(0xFCFCFC));
+        c2.bgcolor(nana::color_rgb(0xFCFCFC));
         
         content.place["content_1"] << c1;
         content.place.field_display("content_1", false);

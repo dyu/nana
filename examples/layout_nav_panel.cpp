@@ -135,14 +135,14 @@ struct App
     {
         ui::Icon menu(fm, "examples/assets/menu18x18.ico", true);
         menu.events().click([this](const nana::arg_click& arg) {
-            this->links$$("content_0");
+            links$$("content_0");
         });
         place["header_"] << menu;
         
         // header
         auto listener = [this](nana::label::command cmd, const std::string& target) {
             if (nana::label::command::click == cmd)
-                this->links$$(target);
+                links$$(target);
         };
         
         for (auto text : LINKS)

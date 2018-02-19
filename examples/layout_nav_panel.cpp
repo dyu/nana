@@ -48,7 +48,7 @@ struct Home : ui::Panel
     nana::label left{ *this, "left" };
     nana::label right{ *this, "right" };
     
-    Home(nana::widget& owner) : Panel(owner, 
+    Home(ui::Panel& owner, const char* field) : Panel(owner, 
         "<left_ weight=30%>"
         "<right_>"
     )
@@ -58,6 +58,8 @@ struct Home : ui::Panel
         place["left_"] << left;
         place["right_"] << right;
         place.collocate();
+        
+        owner.place[field] << *this;
     }
 };
 
@@ -82,7 +84,7 @@ struct App
         "<content_1>"
         "<content_2>"
     };
-    Home home{ content };
+    Home home{ content, "content_0" };
     nana::label test{ content, "c1" };
     nana::label about{ content, "c2" };
     
@@ -98,7 +100,7 @@ struct App
         about.bgcolor(nana::color_rgb(0xFCFCFC));
         
         // content
-        content.place["content_0"] << home;
+        //content.place["content_0"] << home;
         
         content.place["content_1"] << test;
         content.place.field_display("content_1", false);

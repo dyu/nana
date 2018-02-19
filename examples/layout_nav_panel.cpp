@@ -121,8 +121,11 @@ struct App
         
         menu.transparent(true);
         menu.load(nana::paint::image("examples/assets/menu18x18.ico"));
-        menu.events().click([this](const nana::arg_click& arg){
+        menu.events().click([this](const nana::arg_click& arg) {
             this->links$$("content_0");
+        });
+        menu.events().mouse_move([&menu](const nana::arg_mouse& arg) {
+            menu.cursor(nana::cursor::hand);
         });
         
         place["header_"] << menu;

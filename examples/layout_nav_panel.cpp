@@ -3,26 +3,30 @@
 #include <nana/gui/widgets/panel.hpp>
 #include <forward_list>
 
-struct Form : nana::form
-{
-    Form(nana::rectangle rect, const char* title, unsigned bg) : nana::form(rect)
-    {
-        caption(title);
-        bgcolor(nana::color_rgb(bg));
-    }
-};
-
-struct Panel : nana::panel<true>
-{
-    nana::place place{ *this };
+namespace ui {
     
-    Panel(nana::widget& owner, const char* layout) : nana::panel<true>(owner)
+    struct Form : nana::form
     {
-        place.div(layout);
-    }
-};
+        Form(nana::rectangle rect, const char* title, unsigned bg) : nana::form(rect)
+        {
+            caption(title);
+            bgcolor(nana::color_rgb(bg));
+        }
+    };
+    
+    struct Panel : nana::panel<true>
+    {
+        nana::place place{ *this };
+        
+        Panel(nana::widget& owner, const char* layout) : nana::panel<true>(owner)
+        {
+            place.div(layout);
+        }
+    };
+    
+} // ui
 
-struct Content0 : Panel
+struct Content0 : ui::Panel
 {
     nana::label left{ *this, "left" };
     nana::label right{ *this, "right" };
@@ -52,10 +56,10 @@ struct App
     int current_selected{ 0 };
     std::string current_target{ "content_0" };
     
-    Form fm{ {273, 0, 1005, 710}, "Layout example", 0xFFFFFF };
+    ui::Form fm{ {273, 0, 1005, 710}, "Layout example", 0xFFFFFF };
     nana::place place{ fm };
     nana::label bottom{ fm, "Copyright 2018 <color=0x0080FF>David Yu</>" };
-    Panel content{ fm,
+    ui::Panel content{ fm,
         "vert"
         "<content_0>"
         "<content_1>"

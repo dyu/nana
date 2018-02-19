@@ -78,10 +78,10 @@ struct App
             "<footer_ weight=20>"
         );
         
+        c2.bgcolor(nana::color_rgb(0xFCFCFC));
+        
         // content
         content.place["content_0"] << c0;
-        
-        c2.bgcolor(nana::color_rgb(0xFCFCFC));
         
         content.place["content_1"] << c1;
         content.place.field_display("content_1", false);

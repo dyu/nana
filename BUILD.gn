@@ -539,6 +539,14 @@ executable("listbox_inline_select") {
   ]
 }
 
+executable("listbox_inline_checkbox") {
+  sources = [ "examples/listbox_inline_checkbox.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("lambda_event") {
   sources = [ "examples/lambda_event.cpp" ]
   deps = [

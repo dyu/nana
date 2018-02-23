@@ -125,7 +125,7 @@ static const int WIDTH = 1005,
         // inner
         LB_FIELDS = 2,
         LB_INNER = MARGIN * 3 * LB_FIELDS,
-        OTHER_WIDTH = 20,
+        OTHER_WIDTH = 25,
         MAIN_WIDTH = LB_WIDTH - LB_INNER - OTHER_WIDTH;
 
 int main()
@@ -137,6 +137,7 @@ int main()
 
     //Create two columns
     lsbox.show_header(false);
+    lsbox.checkable(true);
     lsbox.append_header("", OTHER_WIDTH);
     lsbox.append_header("", MAIN_WIDTH);
     
@@ -144,10 +145,10 @@ int main()
     lsbox.at(0).inline_factory(1, nana::pat::make_factory<inline_widget>());
     
     //Then append items
-    lsbox.at(0).append({ "#", "Foo" });
-    lsbox.at(0).append({ "#", "Bar" });
-    lsbox.at(0).append({ "#", "Hello" });
-    lsbox.at(0).append({ "#", "World" });
+    lsbox.at(0).append({ "", "Foo" });
+    lsbox.at(0).append({ "", "Bar" });
+    lsbox.at(0).append({ "", "Hello" });
+    lsbox.at(0).append({ "", "World" });
     
     //Create a new category
     //lsbox.append("Category 1");

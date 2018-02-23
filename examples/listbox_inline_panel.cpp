@@ -8,7 +8,7 @@
 
 struct Panel : nana::panel<true>
 {
-    const char* layout;
+    const char* const layout;
     nana::place place;
     
     Panel(const char* layout) : nana::panel<true>(), layout(layout)

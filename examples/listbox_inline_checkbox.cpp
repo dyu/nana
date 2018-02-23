@@ -27,13 +27,6 @@ private:
             indicator_->selected(pos_);
         });
         
-        // buggy
-        txt_.events().mouse_move([this]
-        {
-            //Highlight the item when hovers the textbox
-            indicator_->hovered(pos_);
-        });
-
         txt_.events().key_char([this](const nana::arg_keyboard& arg)
         {
             if (arg.key == nana::keyboard::enter)
@@ -43,7 +36,7 @@ private:
                 indicator_->modify(pos_, txt_.caption());
             }
         });
-
+        
         //Create button
         btn_.create(wd);
         btn_.caption("Delete");
@@ -52,12 +45,6 @@ private:
             //Delete the item when button is clicked
             auto & lsbox = dynamic_cast<nana::listbox&>(indicator_->host());
             lsbox.erase(lsbox.at(pos_));
-        });
-
-        btn_.events().mouse_move([this]
-        {
-            //Highlight the item when hovers the button
-            indicator_->hovered(pos_);
         });
     }
 

@@ -26,7 +26,8 @@ private:
             //Select the item when clicks the textbox
             indicator_->selected(pos_);
         });
-
+        
+        // buggy
         txt_.events().mouse_move([this]
         {
             //Highlight the item when hovers the textbox
@@ -52,7 +53,8 @@ private:
             auto & lsbox = dynamic_cast<nana::listbox&>(indicator_->host());
             lsbox.erase(lsbox.at(pos_));
         });
-
+        
+        // buggy
         btn_.events().mouse_move([this]
         {
             //Highlight the item when hovers the button

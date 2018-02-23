@@ -123,9 +123,10 @@ static const int WIDTH = 1005,
         LB_HEIGHT = HEIGHT - LB_OUTER,
         LB_WIDTH = WIDTH - LB_OUTER,
         // inner
-        LB_FIELDS = 1,
+        LB_FIELDS = 2,
         LB_INNER = MARGIN * 3 * LB_FIELDS,
-        FIELD_WIDTH = LB_WIDTH - LB_INNER;
+        OTHER_WIDTH = 20,
+        MAIN_WIDTH = LB_WIDTH - LB_INNER - OTHER_WIDTH;
 
 int main()
 {
@@ -136,18 +137,17 @@ int main()
 
     //Create two columns
     lsbox.show_header(false);
-    lsbox.append_header("", FIELD_WIDTH);
-    //lsbox.append_header("column 1");
+    lsbox.append_header("", OTHER_WIDTH);
+    lsbox.append_header("", MAIN_WIDTH);
     
     //Set the inline_widget, the first column of category 0, the second column of category 1
-    lsbox.at(0).inline_factory(0, nana::pat::make_factory<inline_widget>());
-    //lsbox.at(1).inline_factory(1, pat::make_factory<inline_widget>());
+    lsbox.at(0).inline_factory(1, nana::pat::make_factory<inline_widget>());
     
     //Then append items
-    lsbox.at(0).append({ std::string("Hello0"), std::string("") });
-    lsbox.at(0).append({ std::string("Hello1"), std::string("") });
-    lsbox.at(0).append({ std::string("Hello2"), std::string("") });
-    lsbox.at(0).append({ std::string("Hello3"), std::string("") });
+    lsbox.at(0).append({ "#", "Foo" });
+    lsbox.at(0).append({ "#", "Bar" });
+    lsbox.at(0).append({ "#", "Hello" });
+    lsbox.at(0).append({ "#", "World" });
     
     //Create a new category
     //lsbox.append("Category 1");

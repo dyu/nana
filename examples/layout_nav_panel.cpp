@@ -87,8 +87,8 @@ struct App
         "<content_2>"
     };
     Home home{ content, "content_0" };
-    nana::label test{ content, "c1" };
-    nana::label about{ content, "c2" };
+    nana::label test{ content, "test" };
+    nana::label about{ content, "about" };
     
     App()
     {

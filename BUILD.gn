@@ -531,6 +531,14 @@ executable("listbox_inline_widget") {
   ]
 }
 
+executable("listbox_inline_checkbox") {
+  sources = [ "examples/listbox_inline_checkbox.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}
+
 executable("listbox_inline_select") {
   sources = [ "examples/listbox_inline_select.cpp" ]
   deps = [
@@ -539,8 +547,8 @@ executable("listbox_inline_select") {
   ]
 }
 
-executable("listbox_inline_checkbox") {
-  sources = [ "examples/listbox_inline_checkbox.cpp" ]
+executable("listbox_inline_panel") {
+  sources = [ "examples/listbox_inline_panel.cpp" ]
   deps = [
     ":base",
     ":gui",

@@ -3,6 +3,35 @@
 #include <nana/gui/widgets/label.hpp>
 #include <nana/gui/widgets/button.hpp>
 #include <nana/gui/widgets/textbox.hpp>
+#include <nana/gui/widgets/panel.hpp>
+#include <nana/gui/drawing.hpp>
+
+struct Panel : nana::panel<true>
+{
+    const char* layout;
+    nana::place place;
+    
+    Panel(const char* layout) : nana::panel<true>(), layout(layout)
+    {
+        
+    }
+    
+private:
+    void _m_complete_creation() override
+    {
+        place.bind(*this);
+        place.div(layout);
+        
+        transparent(true);
+        
+        // draw a simple border.
+        /*nana::drawing dw(*this);
+        dw.draw([](nana::paint::graphics& graph)
+        {
+            graph.rectangle(false, nana::colors::gray_border);
+        });*/
+    }
+};
 
 //Creates a textbox and button
 //textbox shows the value of the sub item
@@ -11,9 +40,15 @@ class inline_widget : public nana::listbox::inline_notifier_interface
 {
     inline_indicator * indicator_{ nullptr };
     index_type  pos_ ;
-    nana::label       lbl_ ;
-    nana::textbox     txt_ ;
-    nana::button      btn_ ;
+    Panel pnl_{
+        "margin=[1,10]"
+        "<lbl_ weight=60%>"
+        "<txt_ weight=30% margin=[0,5]>"
+        "<btn_ weight=10%>" 
+    };
+    nana::label lbl_;
+    nana::textbox txt_;
+    nana::button btn_;
 
 private:
     //Creates inline widget
@@ -24,43 +59,23 @@ private:
         auto $selected = [this]() {
             indicator_->selected(pos_);
         };
-        /*auto $hovered = [this]() {
-            indicator_->hovered(pos_);
-        };*/
-        /*auto $listener = [this](nana::label::command cmd, const std::string& target) {
-            if (nana::label::command::enter == cmd)
-            {
-                indicator_->hovered(pos_);
-            }
-            else if (nana::label::command::click == cmd)
-            {
-                fprintf(stdout, "click\n");
-                indicator_->selected(pos_);
-            }
-        };*/
         
-        lbl_.create(wd);
+        pnl_.create(wd);
+        
+        // label
+        lbl_.create(pnl_);
         lbl_.transparent(true)
             .format(true)
-            //.caption("<size=11></>")
             .events().click($selected);
-        //lbl_.add_format_listener($listener);
-        //lbl_.events().mouse_move($hovered);
+        pnl_.place["lbl_"] << lbl_;
         
-        txt_.create(wd);
+        // textbox
+        txt_.create(pnl_);
         txt_.events().click($selected);
-        //txt_.events().mouse_move($hovered);
-        /*txt_.events().key_char([this](const nana::arg_keyboard& arg)
-        {
-            if (arg.key == nana::keyboard::enter)
-            {
-                //Modify the item when enter is pressed
-                arg.ignore = true;
-                indicator_->modify(pos_, txt_.caption());
-            }
-        });*/
+        pnl_.place["txt_"] << txt_;
         
-        btn_.create(wd);
+        // button
+        btn_.create(pnl_);
         btn_.caption("Delete");
         btn_.events().click([this]
         {
@@ -68,7 +83,7 @@ private:
             auto & lsbox = dynamic_cast<nana::listbox&>(indicator_->host());
             lsbox.erase(lsbox.at(pos_));
         });
-        //btn_.events().mouse_move($hovered);
+        pnl_.place["btn_"] << btn_;
     }
 
     //Activates the inline widget, bound to a certain item of the listbox
@@ -96,23 +111,13 @@ private:
             break;
         }
     }
-
+    
     //Sets the inline widget size
     //dimension represents the max size can be set
     //The coordinate of inline widget is a logical coordinate to the sub item of listbox
     void resize(const nana::size& d) override
     {
-        const int width = d.width;
-        
-        //auto lbl_sz = d;
-        //lbl_sz.width -= (100 + 50);
-        //lbl_.size(lbl_sz);
-        // or
-        //lbl_.size({ d.width - 100 - 50, d.height });
-        
-        lbl_.move({ 5, 0, d.width - 100 - 50 - 5, d.height });
-        txt_.move({ width - 100 - 50, 0, 95, d.height });
-        btn_.move({ width - 50, 0, 45, d.height });
+        pnl_.size(d);
     }
 
     //Sets the value of inline widget with the value of the sub item

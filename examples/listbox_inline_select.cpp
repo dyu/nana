@@ -115,10 +115,9 @@ private:
     }
 
     //Sets the value of inline widget with the value of the sub item
-    void set(const value_type& value) override
+    void set(const std::string& value) override
     {
         lbl_.caption(value);
-        //txt_.caption(value);
     }
 
     //Determines whether to draw the value of sub item

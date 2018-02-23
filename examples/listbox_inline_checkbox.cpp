@@ -1,6 +1,5 @@
 #include <nana/gui/wvl.hpp>
 #include <nana/gui/widgets/listbox.hpp>
-#include <nana/gui/widgets/label.hpp>
 #include <nana/gui/widgets/button.hpp>
 #include <nana/gui/widgets/textbox.hpp>
 
@@ -11,7 +10,6 @@ class inline_widget : public nana::listbox::inline_notifier_interface
 {
     inline_indicator * indicator_{ nullptr };
     index_type  pos_ ;
-    nana::label       lbl_ ;
     nana::textbox     txt_ ;
     nana::button      btn_ ;
 
@@ -21,36 +19,22 @@ private:
     //The position and size of widget can be ignored in this process
     void create(nana::window wd) override
     {
-        auto $selected = [this]() {
-            indicator_->selected(pos_);
-        };
-        /*auto $hovered = [this]() {
-            indicator_->hovered(pos_);
-        };*/
-        /*auto $listener = [this](nana::label::command cmd, const std::string& target) {
-            if (nana::label::command::enter == cmd)
-            {
-                indicator_->hovered(pos_);
-            }
-            else if (nana::label::command::click == cmd)
-            {
-                fprintf(stdout, "click\n");
-                indicator_->selected(pos_);
-            }
-        };*/
-        
-        lbl_.create(wd);
-        lbl_.transparent(true)
-            .format(true)
-            //.caption("<size=11></>")
-            .events().click($selected);
-        //lbl_.add_format_listener($listener);
-        //lbl_.events().mouse_move($hovered);
-        
+        //Create listbox
         txt_.create(wd);
-        txt_.events().click($selected);
-        //txt_.events().mouse_move($hovered);
-        /*txt_.events().key_char([this](const nana::arg_keyboard& arg)
+        txt_.events().click([this]
+        {
+            //Select the item when clicks the textbox
+            indicator_->selected(pos_);
+        });
+        
+        // buggy
+        txt_.events().mouse_move([this]
+        {
+            //Highlight the item when hovers the textbox
+            indicator_->hovered(pos_);
+        });
+
+        txt_.events().key_char([this](const nana::arg_keyboard& arg)
         {
             if (arg.key == nana::keyboard::enter)
             {
@@ -58,8 +42,9 @@ private:
                 arg.ignore = true;
                 indicator_->modify(pos_, txt_.caption());
             }
-        });*/
-        
+        });
+
+        //Create button
         btn_.create(wd);
         btn_.caption("Delete");
         btn_.events().click([this]
@@ -68,7 +53,12 @@ private:
             auto & lsbox = dynamic_cast<nana::listbox&>(indicator_->host());
             lsbox.erase(lsbox.at(pos_));
         });
-        //btn_.events().mouse_move($hovered);
+
+        btn_.events().mouse_move([this]
+        {
+            //Highlight the item when hovers the button
+            indicator_->hovered(pos_);
+        });
     }
 
     //Activates the inline widget, bound to a certain item of the listbox
@@ -100,25 +90,20 @@ private:
     //Sets the inline widget size
     //dimension represents the max size can be set
     //The coordinate of inline widget is a logical coordinate to the sub item of listbox
-    void resize(const nana::size& d) override
+    void resize(const nana::size& dimension) override
     {
-        const int width = d.width;
-        
-        //auto lbl_sz = d;
-        //lbl_sz.width -= (100 + 50);
-        //lbl_.size(lbl_sz);
-        // or
-        //lbl_.size({ d.width - 100 - 50, d.height });
-        
-        lbl_.move({ 5, 0, d.width - 100 - 50 - 5, d.height });
-        txt_.move({ width - 100 - 50, 0, 95, d.height });
-        btn_.move({ width - 50, 0, 45, d.height });
+        auto sz = dimension;
+        sz.width -= 50;
+        txt_.size(sz);
+
+        nana::rectangle r(sz.width + 5, 0, 45, sz.height);
+        btn_.move(r);
     }
 
     //Sets the value of inline widget with the value of the sub item
-    void set(const std::string& value) override
+    void set(const value_type& value) override
     {
-        lbl_.caption(value);
+        txt_.caption(value);
     }
 
     //Determines whether to draw the value of sub item
@@ -139,9 +124,10 @@ static const int WIDTH = 1005,
         LB_HEIGHT = HEIGHT - LB_OUTER,
         LB_WIDTH = WIDTH - LB_OUTER,
         // inner
-        LB_FIELDS = 1,
+        LB_FIELDS = 2,
         LB_INNER = MARGIN * 3 * LB_FIELDS,
-        FIELD_WIDTH = LB_WIDTH - LB_INNER;
+        OTHER_WIDTH = 25,
+        MAIN_WIDTH = LB_WIDTH - LB_INNER - OTHER_WIDTH;
 
 int main()
 {
@@ -152,16 +138,18 @@ int main()
 
     //Create two columns
     lsbox.show_header(false);
-    lsbox.append_header("", FIELD_WIDTH);
-    //lsbox.append_header("column 1");
+    lsbox.checkable(true);
+    lsbox.append_header("", OTHER_WIDTH);
+    lsbox.append_header("", MAIN_WIDTH);
     
     //Set the inline_widget, the first column of category 0, the second column of category 1
-    lsbox.at(0).inline_factory(0, nana::pat::make_factory<inline_widget>());
+    lsbox.at(0).inline_factory(1, nana::pat::make_factory<inline_widget>());
     
     //Then append items
-    lsbox.at(0).append({ std::string(R"--(<color=0x0080FF size=11>foo</>)--") });
-    lsbox.at(0).append({ std::string(R"--(<color=0x0080FF size=11>bar</>)--") });
-    lsbox.at(0).append({ std::string(R"--(<color=0x0080FF size=11>baz</>)--") });
+    lsbox.at(0).append({ "", "Foo" });
+    lsbox.at(0).append({ "", "Bar" });
+    lsbox.at(0).append({ "", "Hello" });
+    lsbox.at(0).append({ "", "World" });
     
     //Create a new category
     //lsbox.append("Category 1");

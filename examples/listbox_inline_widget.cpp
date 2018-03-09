@@ -132,10 +132,10 @@ static const int WIDTH = 1005,
 
 int main()
 {
-    nana::form fm{ {10, 10, WIDTH, HEIGHT} };
+    nana::form fm{ {10, 10, unsigned(WIDTH), unsigned(HEIGHT)} };
     fm.bgcolor(nana::colors::white);
     
-    nana::listbox lsbox{ fm, { MARGIN, MARGIN, LB_WIDTH, LB_HEIGHT } };
+    nana::listbox lsbox{ fm, { MARGIN, MARGIN, unsigned(LB_WIDTH), unsigned(LB_HEIGHT) } };
 
     //Create two columns
     lsbox.show_header(false);

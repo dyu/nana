@@ -1,7 +1,7 @@
 # ==================================================
 
 config("nana_config") {
-  defines = [ "NANA_ENABLE_PNG" ]
+  defines = [ "NANA_ENABLE_PNG", "USE_LIBPNG_FROM_OS" ]
   include_dirs = [ "include" ]
   if (is_win) {
     libs = [
@@ -267,7 +267,8 @@ static_library("gui") {
   }
   
   public_configs = [ ":nana_config" ]
-  deps = [ ":base", "//gn-deps/libpng:png" ]
+  public_deps = [ "//gn-deps/libpng:png" ]
+  deps = [ ":base" ]
 }
 
 if (!is_win) {

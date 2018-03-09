@@ -41,6 +41,12 @@ Other branches:
 sudo apt-get install libasound-dev libx11-dev libxft-dev
 ```
 
+## Fetch deps
+```sh
+git clone --depth 1 --single-branch -b master https://github.com/dyu/gn-deps
+./gn-deps/fetch.sh libpng
+```
+
 ## Build via GN
 1. `git clone --depth 1 --single-branch -b cpp14 https://github.com/dyu/gn-build`
 

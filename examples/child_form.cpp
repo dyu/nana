@@ -25,7 +25,7 @@ int main()
     fm2.events().unload([&fm, &fm2](const nana::arg_unload& arg) {
         arg.cancel = true;
         fm2.hide();
-        //nana::API::window_enabled(fm, true);
+        nana::API::window_enabled(fm, true);
     });
     
     auto $btn_clicked = [&fm, &fm2](const nana::arg_click& arg) {
@@ -40,7 +40,7 @@ int main()
             nana::API::move_window(fm2, pos);
             
             fm2.show();
-            //nana::API::window_enabled(fm, false);
+            nana::API::window_enabled(fm, false);
         }
     };
     

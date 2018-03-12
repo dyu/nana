@@ -765,3 +765,10 @@ executable("png") {
   ]
 }
 
+executable("child_form") {
+  sources = [ "examples/child_form.cpp" ]
+  deps = [
+    ":base",
+    ":gui",
+  ]
+}

@@ -81,9 +81,7 @@ static_library("base") {
     "source/threads/pool.cpp",
   ]
   
-  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
   if (!is_win) {
-    defines += [ "linux" ]
     include_dirs = [ "/usr/include/freetype2" ]
   }
   
@@ -260,9 +258,7 @@ static_library("gui") {
     "source/system/dataexch.cpp", # depends on freetype2
   ]
 
-  defines = [ "NANA_IGNORE_CONF", "VERBOSE_PREPROCESSOR" ]
   if (!is_win) {
-    defines += [ "linux" ]
     include_dirs = [ "/usr/include/freetype2" ]
   }
   
